@@ -70,3 +70,29 @@ SELECT
         EXTRACT(hour FROM CAST(timestamp AS TIMESTAMP)) AS hour,
 
 FROM train_series
+
+
+SELECT AVG(anglez)  as average_anglez
+FROM train_series
+WHERE
+    CAST(timestamp AS TIMESTAMP) < '2018-08-15 02:26:00.000'
+    AND series_id = '038441c925bb';
+
+   
+SELECT
+    series_id,
+    CAST(step AS INTEGER) AS step,
+    CAST(timestamp AS TIMESTAMP) AS TIMESTAMPTZ,
+    CAST(anglez AS FLOAT) AS anglez,
+    CAST(enmo AS FLOAT) AS enmo,
+    EXTRACT(YEAR FROM CAST(timestamp AS TIMESTAMP)) AS year,
+    EXTRACT(month FROM CAST(timestamp AS TIMESTAMP)) AS month,
+    EXTRACT(day FROM CAST(timestamp AS TIMESTAMP)) AS day,
+    EXTRACT(hour FROM CAST(timestamp AS TIMESTAMP)) AS hour,
+    EXTRACT(minute FROM CAST(timestamp AS TIMESTAMP)) AS minute,
+    EXTRACT(second FROM CAST(timestamp AS TIMESTAMP)) AS second
+FROM
+    train_series
+WHERE
+    CAST(timestamp AS TIMESTAMP) <= '2018-08-15 02:26:00.000'
+    and series_id='038441c925bb'
