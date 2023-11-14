@@ -25,6 +25,16 @@ CREATE TABLE onset AS
 SELECT  night,series_id, step,timestamp
 FROM main.train_events where event='onset';
 
+
+
+CREATE TABLE memory.main.train_events_new (
+	eries_id VARCHAR,
+	night BIGINT,
+	onsetstep BIGINT,
+	onsettimestamp TIMESTAMP,
+	wakeupstep BIGINT,
+	wakeuptimestamp TIMESTAMP
+);
 --then I insert data into a table by joining from two tables 
 INSERT
 	INTO
@@ -45,6 +55,7 @@ from
 where
 	a.night = b.night and a.series_id=b.series_id
 
+alter table train_events_new add column average_angelz float;
 
 -- from the beginig we had about 12 million rows and it reduced to 7254 rows:
 	select count(*) from train_events_new where 	series_id = '05e1944c3818' order by night asc
@@ -91,8 +102,15 @@ SELECT
     EXTRACT(hour FROM CAST(timestamp AS TIMESTAMP)) AS hour,
     EXTRACT(minute FROM CAST(timestamp AS TIMESTAMP)) AS minute,
     EXTRACT(second FROM CAST(timestamp AS TIMESTAMP)) AS second
-FROM
-    train_series
+FROM train_series
+
+
+
+
+	SELECT AVG(anglez)  as average_anglez
+FROM train_series
 WHERE
-    CAST(timestamp AS TIMESTAMP) <= '2018-08-15 02:26:00.000'
-    and series_id='038441c925bb'
+    CAST(timestamp AS TIMESTAMP) < '2018-08-15 02:26:00.000'
+    AND series_id = '038441c925bb';
+
+  
